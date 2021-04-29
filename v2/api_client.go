@@ -196,7 +196,8 @@ func parameterToString(obj interface{}, collectionFormat string) string {
 	}
 
 	if reflect.TypeOf(obj).Kind() == reflect.Slice {
-		return strings.Trim(strings.Replace(fmt.Sprint(obj), " ", delimiter, -1), "[]")
+		parameter := strings.ReplaceAll(fmt.Sprint(obj), "\\ ", "[escaped_space]")
+		return strings.Trim(strings.ReplaceAll(strings.Replace(parameter, " ", delimiter, -1), "[escaped_space]", " "), "[]")
 	}
 
 	return fmt.Sprintf("%v", obj)
